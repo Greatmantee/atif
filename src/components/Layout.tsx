@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { HospitalRole } from '../types';
+import { DEFAULT_STAFF_ROSTER } from '../data/defaultStaff';
 
 interface LayoutProps {
   currentUser: {
@@ -27,8 +28,10 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default function Layout({ currentUser, staffList, onSwitchUser, onLogout, children }: LayoutProps) {
+export default function Layout({ currentUser, staffList = [], onSwitchUser, onLogout, children }: LayoutProps) {
   if (!currentUser) return <>{children}</>;
+
+  const displayStaff = staffList && staffList.length > 0 ? staffList : DEFAULT_STAFF_ROSTER;
 
   const getDepartmentTagColor = (role: HospitalRole) => {
     switch (role) {
@@ -65,7 +68,7 @@ export default function Layout({ currentUser, staffList, onSwitchUser, onLogout,
               className="w-full bg-slate-50 border border-slate-200 text-[10px] rounded px-2 py-1 font-semibold text-slate-700 focus:outline-none"
               id="role-swap-select"
             >
-              {staffList.slice(0, 10).map((staff) => (
+              {displayStaff.slice(0, 10).map((staff) => (
                 <option key={staff.id} value={staff.id}>
                   Switch to: {staff.username === 'him_officer' ? 'HIM' : staff.username === 'dr_house' ? 'Doctor' : staff.username === 'nurse_rached' ? 'Nurse' : staff.username === 'lab_scientist' ? 'Lab Sci' : staff.username === 'rad_officer' ? 'Radiology' : staff.username === 'pharmacist_bob' ? 'Pharma' : staff.username === 'accounts_alice' ? 'Accounts' : staff.username === 'hospital_admin' ? 'Hosp Admin' : staff.username === 'analyst_sam' ? 'Analyst' : 'IT Admin'} ({staff.fullName})
                 </option>
@@ -75,7 +78,7 @@ export default function Layout({ currentUser, staffList, onSwitchUser, onLogout,
 
           {/* Desktop inline buttons */}
           <div className="hidden md:flex flex-wrap gap-1.5 justify-center md:justify-end items-center">
-            {staffList.slice(0, 10).map((staff) => (
+            {displayStaff.slice(0, 10).map((staff) => (
               <button
                 key={staff.id}
                 onClick={() => onSwitchUser(staff.id)}
