@@ -1,0 +1,6 @@
+{
+  "name": "ATIF HIS",
+  "description": "An Electronic Health Record (EHR) and Hospital Information System with an embedded background Adaptive Threat Intelligence Framework (ATIF) for monitoring and detecting cybersecurity threats, insider access, and record abuse.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
